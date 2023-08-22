@@ -30,7 +30,7 @@ jobs:
         run: ls -R
       - name: Create a tag
         env:
-          tag: v1.2.4
+          tag: v1.2.5
         run: |
           echo "Creating git tag:" $tag
           git config --local user.name "bsekula"
@@ -43,6 +43,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: ./dist/world.txt
+          tag: v1.2.5
 
       # - name: Release
       #   run: gh release create v1.2.3 ./dist/*
