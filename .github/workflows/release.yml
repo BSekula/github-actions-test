@@ -29,6 +29,8 @@ jobs:
         run: ls -R
       - name: Release
         run: gh release create v1.2.3 ./dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
