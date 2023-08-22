@@ -21,11 +21,13 @@ jobs:
       #   working-directory: dist
       - name: Download artefacts
         run: gh run download -n my-artifact
+        working-directory: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Display structure of downloaded files
         run: ls -R
-
+      - name: Release
+        run: gh release create v1.2.3 ./dist/*
 
 
 
