@@ -19,6 +19,7 @@ jobs:
       # - name: Display structure of downloaded files
       #   run: ls -R
       #   working-directory: dist
+      - run: mkdir -p dist
       - name: Download artefacts
         run: gh run download -n my-artifact
         working-directory: dist
