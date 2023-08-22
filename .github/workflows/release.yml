@@ -11,10 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
-        with:
-          name: my-artifact
-          path: dist
+      # Do not have access to other WF artefacts
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: my-artifact
+      #     path: dist
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: dist
+      - name: Download artefacts
+        run: gh run download -n my-artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: dist
