@@ -33,7 +33,6 @@ jobs:
           git config --local user.name "bsekula"
           git config --local user.email "bsekula12@gmail.com"
           git tag -a v1.2.3 -m "v1.2.3 test"
-          git remote rm origin
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git push origin --tags
 
