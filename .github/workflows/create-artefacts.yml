@@ -1,0 +1,34 @@
+name: Create Artefacts
+
+on: [pull_request]
+
+jobs:
+  create-artefacts:
+    runs-on: ubuntu-latest
+    name: Create artefact
+    steps:
+      - uses: actions/checkout@v3
+      - run: mkdir -p path/to/artifact
+      - run: echo ${{github.sha}} > path/to/artifact/world.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: path/to/artifact/world.txt
+
+  test-artefact:
+    name: Test artefacts
+    runs-on: ubuntu-latest
+    needs: [create-artefacts]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: path/to/artifact
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: path/to/artifact
+
+      - name: Show text artefact
+        run: cat world.txt
+        working-directory: path/to/artifact

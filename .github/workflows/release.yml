@@ -1,0 +1,25 @@
+name: release-workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: dist
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dist
+
+
+
+
+
