@@ -9,8 +9,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
-      - run: echo hello > world.txt
+      - run: echo hello > path/to/artifact/world.txt
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
           path: world.txt
+
+  test-artefact:
+    name: Test artefacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: path/to/artifact
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: path/to/artifact
+
+      - name: Cat artefact
+        run: cat artifact
+        working-directory: path/to/artifact
