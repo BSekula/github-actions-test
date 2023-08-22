@@ -13,7 +13,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path: world.txt
+          path: path/to/artifact/world.txt
 
   test-artefact:
     name: Test artefacts
