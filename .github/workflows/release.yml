@@ -29,11 +29,13 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
       - name: Create a tag
+        env:
+          tag: v1.2.4
         run: |
-          echo "Creating git tag:" v1.2.3
+          echo "Creating git tag:" $tag
           git config --local user.name "bsekula"
           git config --local user.email "bsekula12@gmail.com"
-          git tag -a v1.2.3 -m "v1.2.3 test"
+          git tag -a $tag -m "$tag test"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git push origin --tags
 
