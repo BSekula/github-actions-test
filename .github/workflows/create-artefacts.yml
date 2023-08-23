@@ -2,6 +2,9 @@ name: Create Artefacts
 
 on: [pull_request]
 
+env:
+  tag: v1.2.9
+
 jobs:
   create-artefacts:
     runs-on: ubuntu-latest
@@ -9,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
-      - run: echo ${{github.sha}} > path/to/artifact/world.txt
+      - run: echo $tag > path/to/artifact/artefact-$tag.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: my-artifact-$tag
           path: path/to/artifact/world.txt
 
   test-artefact:
@@ -22,7 +25,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact
+          name: my-artifact-$tag
           path: path/to/artifact
 
       - name: Display structure of downloaded files
@@ -30,5 +33,5 @@ jobs:
         working-directory: path/to/artifact
 
       - name: Show text artefact
-        run: cat world.txt
+        run: cat artefact-$tag.txt
         working-directory: path/to/artifact
