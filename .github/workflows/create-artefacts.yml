@@ -1,9 +1,6 @@
 name: Create artifacts
 
-on: [pull_request]
-
-env:
-  tag: v1.2.9
+on: [pull_request, push]
 
 jobs:
   create-artifacts:
@@ -19,7 +16,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact-${tag}
-          path: path/to/artifact/artifact-${{tag}}.txt
+          path: path/to/artifact/artifact-${tag}.txt
 
   test-artifact:
     name: Test artifacts
