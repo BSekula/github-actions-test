@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact-$tag
+          name: my-artifact-${tag}
           path: path/to/artifact
 
       - name: Display structure of downloaded files
@@ -36,5 +36,5 @@ jobs:
         working-directory: path/to/artifact
 
       - name: Show text artefact
-        run: cat artefact-$tag.txt
+        run: cat artefact-${tag}.txt
         working-directory: path/to/artifact
