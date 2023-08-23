@@ -1,34 +1,41 @@
-name: Create Artefacts
+name: Create artifacts
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
-  create-artefacts:
+  create-artifacts:
     runs-on: ubuntu-latest
-    name: Create artefact
+    name: Create artifact
+    env:
+      tag: v3.0.0
     steps:
+      - run: echo $tag
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
-      - run: echo ${{github.sha}} > path/to/artifact/world.txt
+      - run: echo $tag > path/to/artifact/artifact1-$tag.txt
+      - run: echo $tag > path/to/artifact/artifact2-$tag.txt
+      - run: ls -al path/to/artifact
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: path/to/artifact/world.txt
+          name: my-artifact-${{env.tag}}
+          path: path/to/artifact/
 
-  test-artefact:
-    name: Test artefacts
+  test-artifact:
+    name: Test artifacts
     runs-on: ubuntu-latest
-    needs: [create-artefacts]
+    needs: [create-artifacts]
+    env:
+      tag: v3.0.0
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact
+          name: my-artifact-${{env.tag}}
           path: path/to/artifact
 
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: path/to/artifact
 
-      - name: Show text artefact
-        run: cat world.txt
+      - name: Show text artifact
+        run: cat artifact1-${{env.tag}}.txt
         working-directory: path/to/artifact
