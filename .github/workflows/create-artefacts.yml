@@ -17,7 +17,7 @@ jobs:
         with:
           name: my-artifact-${{env.tag}}
           # name: ${{ env.folder_name }}-${{ github.sha }}
-          path: path/to/artifact/artifact-${tag}.txt
+          path: path/to/artifact/artifact-${{env.tag}}.txt
 
   test-artifact:
     name: Test artifacts
