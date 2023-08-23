@@ -11,11 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
-      - run: echo $tag > path/to/artifact/artifact-${tag}.txt
+      - run: echo $tag > path/to/artifact/artifact-$tag.txt
       - run: ls -al path/to/artifact
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact-${tag}
+          name: my-artifact-${{env.tag}}
+          # name: ${{ env.folder_name }}-${{ github.sha }}
           path: path/to/artifact/artifact-${tag}.txt
 
   test-artifact:
@@ -27,7 +28,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact-${{tag}}
+          name: my-artifact-${{env.tag}}
           path: path/to/artifact
 
       - name: Display structure of downloaded files
