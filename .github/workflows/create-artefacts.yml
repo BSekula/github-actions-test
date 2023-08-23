@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
       - run: mkdir -p path/to/artifact2
-      - run: echo "ASDASDASDA" > path/to/artifact/artifact1-$tag.txt
+      - run: echo "BBBBB" > path/to/artifact/artifact1-$tag.txt
       - run: echo $tag > path/to/artifact2/artifact2-$tag.txt
       - run: ls -al path/to/artifact
       - run: ls -al path/to/artifact2
