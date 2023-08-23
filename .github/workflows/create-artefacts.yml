@@ -1,7 +1,7 @@
 name: Create artifacts
 
 
-on: [pull_request]
+on: [pull_request, push]
 env:
   tag: v3.0.2
 
