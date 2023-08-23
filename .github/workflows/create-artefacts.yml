@@ -6,7 +6,6 @@ jobs:
   create-artifacts:
     runs-on: ubuntu-latest
     name: Create artifact
-    needs: [get-package-version]
     env:
       tag: v3.0.0
     steps:
