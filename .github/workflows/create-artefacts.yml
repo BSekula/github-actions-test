@@ -2,35 +2,33 @@ name: Create artifacts
 
 on: [pull_request, push]
 
-env:
-  tag: v1.2.9
-
 jobs:
 
-  get-package-version:
-    name: Get package version
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get version
-        run: |
-          export PACKAGE_VERSION=`node -p "require('./package.json').version"`;
+  # get-package-version:
+  #   name: Get package version
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get version
+  #       run: |
+  #         export PACKAGE_VERSION=`node -p "require('./package.json').version"`;
 
   create-artifacts:
     runs-on: ubuntu-latest
     name: Create artifact
     needs: [get-package-version]
     env:
-      tag: $PACKAGE_VERSION
+      tag: v3.0.0
     steps:
       - run: echo $tag
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
-      - run: echo $tag > path/to/artifact/artifact-$tag.txt
+      - run: echo $tag > path/to/artifact/artifact1-$tag.txt
+      - run: echo $tag > path/to/artifact/artifact2-$tag.txt
       - run: ls -al path/to/artifact
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact-${{env.tag}}
-          path: path/to/artifact/artifact-${{env.tag}}.txt
+          path: path/to/artifact/*
 
   test-artifact:
     name: Test artifacts
