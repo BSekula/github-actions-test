@@ -6,11 +6,27 @@ on:
       - main
 
 jobs:
+
+  test-matrix:
+    name: Test matrix if
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        project: ["aaa", "bbb"]
+    steps:
+      - name: Test if
+        run: echo ${{matrix.project}}
+
+      - name: Test if
+        if: matrix.project == "aaa"
+        run: echo "aaa"
+
   release:
     name: Release
     runs-on: ubuntu-latest
     env:
-      tag: v3.0.2
+      tag: v3.0.3
     steps:
       - uses: actions/checkout@v3
       # Do not have access to other WF artifacts
