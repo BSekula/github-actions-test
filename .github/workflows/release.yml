@@ -9,6 +9,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      tag: v1.2.8
     steps:
       - uses: actions/checkout@v3
       # Do not have access to other WF artefacts
@@ -20,6 +22,7 @@ jobs:
       #   run: ls -R
       #   working-directory: dist
       - run: mkdir -p dist
+      - run: echo $ART_VERSION
       - name: Download artefacts
         run: gh run download -n my-artifact
         working-directory: dist
@@ -28,8 +31,6 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
       - name: Create a tag
-        env:
-          tag: v1.2.7
         run: |
           echo "Creating git tag:" $tag
           git config --local user.name "bsekula"
