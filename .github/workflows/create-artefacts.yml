@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact-${tag}
-          path: path/to/artifact/world.txt
+          path: path/to/artifact/artefact-${tag}.txt
 
   test-artefact:
     name: Test artefacts
