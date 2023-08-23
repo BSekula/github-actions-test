@@ -18,7 +18,7 @@ jobs:
       - run: ls -al path/to/artifact
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact-${{tag}}
+          name: my-artifact-${tag}
           path: path/to/artifact/world.txt
 
   test-artefact:
