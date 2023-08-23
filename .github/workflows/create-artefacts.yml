@@ -3,7 +3,6 @@ name: Create artifacts
 on: [pull_request, push]
 
 jobs:
-
   # get-package-version:
   #   name: Get package version
   #   runs-on: ubuntu-latest
@@ -28,7 +27,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact-${{env.tag}}
-          path: path/to/artifact/*
+          path: path/to/artifact/
 
   test-artifact:
     name: Test artifacts
