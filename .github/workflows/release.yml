@@ -13,13 +13,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        project: ["aaa", "bbb"]
+        project: ['aaa', 'bbb']
     steps:
       - name: Print matrix
         run: echo ${{matrix.project}}
 
       - name: Test if
-        if: matrix.project == "aaa"
+        if: matrix.project == 'aaa'
         run: echo "aaa"
 
   # release:
