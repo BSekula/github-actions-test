@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact-${tag}
+          name: my-artifact-${{tag}}
           path: path/to/artifact
 
       - name: Display structure of downloaded files
