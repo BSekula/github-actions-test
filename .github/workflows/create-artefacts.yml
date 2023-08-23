@@ -1,13 +1,15 @@
 name: Create artifacts
 
 on: [pull_request, push]
+env:
+  tag: v3.0.1
 
 jobs:
+
   create-artifacts:
     runs-on: ubuntu-latest
     name: Create artifact
-    env:
-      tag: v3.0.0
+
     steps:
       - run: echo $tag
       - uses: actions/checkout@v3
@@ -24,8 +26,6 @@ jobs:
     name: Test artifacts
     runs-on: ubuntu-latest
     needs: [create-artifacts]
-    env:
-      tag: v3.0.0
     steps:
       - uses: actions/download-artifact@v3
         with:
