@@ -2,7 +2,7 @@ name: Create artifacts
 
 on: [pull_request, push]
 env:
-  tag: v3.0.1
+  tag: v3.0.2
 
 jobs:
 
@@ -14,13 +14,19 @@ jobs:
       - run: echo $tag
       - uses: actions/checkout@v3
       - run: mkdir -p path/to/artifact
+      - run: mkdir -p path/to/artifact2
       - run: echo $tag > path/to/artifact/artifact1-$tag.txt
-      - run: echo $tag > path/to/artifact/artifact2-$tag.txt
+      - run: echo $tag > path/to/artifact2/artifact2-$tag.txt
       - run: ls -al path/to/artifact
+      - run: ls -al path/to/artifact2
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact-${{env.tag}}
           path: path/to/artifact/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact-2-${{env.tag}}
+          path: path/to/artifact2/
 
   test-artifact:
     name: Test artifacts
