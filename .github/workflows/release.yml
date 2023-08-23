@@ -15,7 +15,7 @@ jobs:
       tag: v1.2.9
     steps:
       - uses: actions/checkout@v3
-      # Do not have access to other WF artefacts
+      # Do not have access to other WF artifacts
       # - uses: actions/download-artifact@v3
       #   with:
       #     name: my-artifact
@@ -25,7 +25,7 @@ jobs:
       #   working-directory: dist
       - run: mkdir -p dist
       - run: echo $ART_VERSION
-      - name: Download artefacts
+      - name: Download artifacts
         run: gh run download -n my-artifact-$tag
         working-directory: dist
         env:
