@@ -37,5 +37,5 @@ jobs:
         working-directory: path/to/artifact
 
       - name: Show text artifact
-        run: cat artifact-${tag}.txt
+        run: cat artifact1-${{env.tag}}.txt
         working-directory: path/to/artifact
