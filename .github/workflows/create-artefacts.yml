@@ -3,14 +3,6 @@ name: Create artifacts
 on: [pull_request, push]
 
 jobs:
-  # get-package-version:
-  #   name: Get package version
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Get version
-  #       run: |
-  #         export PACKAGE_VERSION=`node -p "require('./package.json').version"`;
-
   create-artifacts:
     runs-on: ubuntu-latest
     name: Create artifact
