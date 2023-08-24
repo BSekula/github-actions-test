@@ -63,18 +63,15 @@ jobs:
 
       - name: Download artifacts
         continue-on-error: true
-        run: gh run download -p *${{env.tag}}-test01 -D ./temp_artifacts
+        run: |
+          gh run download -p *${{env.tag}}-test01 -D ./temp_artifacts
+          mv ./temp_artifacts/*/* artifacts/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Display structure of downloaded files
+      - name: List artifacts
         run: ls -R
-
-      - name: Flatten artifacts
-        run: mv ./temp_artifacts/*/* artifacts/
-
-      - name: Display structure of flatten files
-        run: ls -R
+        working-directory: artifacts
 
       - name: Create a tag
         run: |
