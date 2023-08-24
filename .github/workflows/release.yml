@@ -65,6 +65,7 @@ jobs:
         continue-on-error: true
         run: |
           gh run download -p *${{env.tag}}-test01 -D ./temp_artifacts
+          echo Flattening artifacts
           mv ./temp_artifacts/*/* artifacts/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -85,8 +86,7 @@ jobs:
       - name: Release by softprops
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            ./artifacts/*
+          files: ./artifacts/*
           tag_name: ${{env.tag}}
 
       # - name: Release
