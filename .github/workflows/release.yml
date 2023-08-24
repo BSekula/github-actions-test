@@ -64,8 +64,8 @@ jobs:
       - name: Download artifacts
         continue-on-error: true
         run: |
-          gh run download -p *${{env.tag}}-test01 -D ./temp_artifacts
-          echo Flattening artifacts
+          gh run download -p *${{env.tag}} -D ./temp_artifacts
+          echo "Flattening artifacts"
           mv ./temp_artifacts/*/* artifacts/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
