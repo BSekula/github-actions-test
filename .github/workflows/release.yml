@@ -26,9 +26,27 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     env:
-      tag: v3.0.3
+      tag: v3.0.5
     steps:
+      - run: echo $tag
       - uses: actions/checkout@v3
+      - run: mkdir -p path/to/artifact
+      - run: mkdir -p path/to/artifact2
+      - run: echo "BBBBB" > path/to/artifact/artifact1-$tag.txt
+      - run: echo $tag > path/to/artifact2/artifact2-$tag.txt
+      - run: ls -al path/to/artifact
+      - run: ls -al path/to/artifact2
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact-${{env.tag}}
+          path: path/to/artifact/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact-2-${{env.tag}}
+          path: path/to/artifact2/
+
+
+
       # Do not have access to other WF artifacts
       # - uses: actions/download-artifact@v3
       #   with:
@@ -37,10 +55,12 @@ jobs:
       # - name: Display structure of downloaded files
       #   run: ls -R
       #   working-directory: dist
+
+
       - run: mkdir -p dist
       - run: echo $ART_VERSION
       - name: Download artifacts
-        run: gh run download -p *${{env.tag}}
+        run: gh run download -p *${{env.tag}} -d ./dist
         working-directory: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
