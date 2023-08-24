@@ -70,7 +70,7 @@ jobs:
         run: ls -R
 
       - name: Flatten artifacts
-        run: run mv ./temp_artifacts/*/*.* artifacts/
+        run: mv ./temp_artifacts/*/* artifacts/
 
       - name: Display structure of flatten files
         run: ls -R
