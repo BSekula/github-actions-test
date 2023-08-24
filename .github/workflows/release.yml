@@ -71,8 +71,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List artifacts
-        run: ls -R
-        working-directory: artifacts
+        run: ls -R ./artifacts
 
       - name: Create a tag
         run: |
