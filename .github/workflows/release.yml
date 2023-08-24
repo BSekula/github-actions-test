@@ -26,7 +26,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     env:
-      tag: v3.0.5
+      tag: v3.0.6
     steps:
       - run: echo $tag
       - uses: actions/checkout@v3
@@ -57,15 +57,23 @@ jobs:
       #   working-directory: dist
 
 
-      - run: mkdir -p dist
-      - run: echo $ART_VERSION
+      - run: mkdir -p artifacts
+      - run: mkdir -p temp_artifacts
+
       - name: Download artifacts
-        run: gh run download -p *${{env.tag}} -d ./dist
-        working-directory: dist
+        run: gh run download -p *${{env.tag}} -D ./temp_artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Display structure of downloaded files
         run: ls -R
+
+      - name: Flatten artifacts
+        run: run mv ./temp_artifacts/*/*.* artifacts/
+
+      - name: Display structure of flatten files
+        run: ls -R
+
       - name: Create a tag
         run: |
           echo "Creating git tag:" $tag
