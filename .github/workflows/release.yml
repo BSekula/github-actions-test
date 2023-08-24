@@ -40,7 +40,7 @@ jobs:
       - run: mkdir -p dist
       - run: echo $ART_VERSION
       - name: Download artifacts
-        run: gh run download -n my-artifact-${{env.tag}} -n my-artifact-2-${{env.tag}}
+        run: gh run download -p my-artifact-*
         working-directory: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
