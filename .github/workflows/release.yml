@@ -62,6 +62,7 @@ jobs:
       - run: mkdir -p temp_artifacts
 
       - name: Download artifacts
+        continue-on-error: true
         run: gh run download -p *${{env.tag}}-test01 -D ./temp_artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
