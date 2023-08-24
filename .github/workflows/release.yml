@@ -88,8 +88,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./dist/my-artifact-${{env.tag}}/*
-            ./dist/my-artifact-2-${{env.tag}}/*
+            ./artifacts/*
           tag_name: ${{env.tag}}
 
       # - name: Release
