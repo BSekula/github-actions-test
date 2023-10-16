@@ -25,3 +25,5 @@ jobs:
       - run: ls -alt
       - name: test interpolation
         run: ls ${{env.LS_FLAG}} .
+      - name: test interpolation
+        run: echo ${{env}}
