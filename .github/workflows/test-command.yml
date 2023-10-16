@@ -25,7 +25,7 @@ jobs:
       - run: ls -alt
 
       - name: Set flag
-        run: echo "LS_FLAG=--color=auto" >> $GITHUB_ENV
+        run: echo "LS_FLAG=-alt" >> $GITHUB_ENV
 
       - name: Test flag
         run: ls ${{env.LS_FLAG}}
