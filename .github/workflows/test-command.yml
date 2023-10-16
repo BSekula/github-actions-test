@@ -1,0 +1,27 @@
+name: Test interpolation
+
+on: push
+
+
+jobs:
+
+  create-outputs:
+    runs-on: ubuntu-latest
+    name: Create ls flag
+    steps:
+      - id: step1
+        run: |
+          echo "LS_FLAG=-als" >> "$GITHUB_OUTPUT"
+
+  create-artifacts:
+    runs-on: ubuntu-latest
+    name: Create artifact
+
+    steps:
+      - run: echo $tag
+      - uses: actions/checkout@v3
+      - run: mkdir -p aaaa
+      - run: mkdir -p bbbb
+      - run: ls -al path/to/artifact2
+      - name: test interpolation
+        run: ls ${{env.LS_FLAG}} .
