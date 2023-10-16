@@ -11,11 +11,11 @@ jobs:
     steps:
       - id: step1
         run: |
-          echo "LS_FLAG=-als" >> "$GITHUB_OUTPUT"
+          echo "LS_FLAG=-als" >> "$GITHUB_ENV"
 
-  create-artifacts:
+  test-ls:
     runs-on: ubuntu-latest
-    name: Create artifact
+    name: Test ls
 
     steps:
       - run: echo $tag
