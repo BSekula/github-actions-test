@@ -1,0 +1,99 @@
+name: release-workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  test-matrix:
+    name: Test matrix if
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        project: ['aaa', 'bbb']
+    steps:
+      - name: Print matrix
+        run: echo ${{matrix.project}}
+
+      - name: Test if
+        if: matrix.project == 'aaa'
+        run: echo "aaa"
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    env:
+      tag: v3.0.3
+    steps:
+      - run: echo $tag
+      - uses: actions/checkout@v3
+
+      # - run: mkdir -p path/to/artifact
+      # - run: mkdir -p path/to/artifact2
+      # - run: echo "BBBBB" > path/to/artifact/artifact1-$tag.txt
+      # - run: echo $tag > path/to/artifact2/artifact2-$tag.txt
+      # - run: ls -al path/to/artifact
+      # - run: ls -al path/to/artifact2
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: my-artifact-${{env.tag}}
+      #     path: path/to/artifact/
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: my-artifact-2-${{env.tag}}
+      #     path: path/to/artifact2/
+
+
+
+      # Do not have access to other WF artifacts
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: my-artifact
+      #     path: dist
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: dist
+
+
+      - run: mkdir -p artifacts
+      - run: mkdir -p temp_artifacts
+
+      - name: Download artifacts
+        continue-on-error: true
+        run: |
+          gh run download -p *${{env.tag}} -D ./temp_artifacts
+          echo "Flattening artifacts"
+          mv ./temp_artifacts/*/* artifacts/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List artifacts
+        run: ls -R ./artifacts
+
+      - name: Create a tag
+        run: |
+          echo "Creating git tag:" $tag
+          git config --local user.name "bsekula"
+          git config --local user.email "bsekula12@gmail.com"
+          git tag -a $tag -m "$tag test"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git push origin --tags
+
+      - name: Release by softprops
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./artifacts/*
+          tag_name: ${{env.tag}}
+
+      # - name: Release
+      #   run: gh release create v1.2.3 ./dist/*
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+

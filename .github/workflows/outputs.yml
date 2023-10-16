@@ -1,0 +1,75 @@
+name: Test outputs
+
+on:
+  pull_request:
+    branches: [test*]
+
+  workflow_call:
+    outputs:
+      matrix-zip:
+        description: "Matrix for packing apps"
+        value: ${{ jobs.setup.outputs.matrix-zip }}
+
+env:
+  tag: v3.0.3
+
+jobs:
+
+  create-outputs:
+    runs-on: ubuntu-latest
+    name: Create outputs
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
+    steps:
+      - id: step1
+        run: |
+          echo "test=hello" >> "$GITHUB_OUTPUT"
+          echo "LS_FLAG=-als" >> "$GITHUB_OUTPUT"
+
+      - id: step2
+        run: echo "test=world" >> "$GITHUB_OUTPUT"
+      - name: Echo outputs
+        run: echo $GITHUB_OUTPUT
+
+  create-artifacts:
+    runs-on: ubuntu-latest
+    name: Create artifact
+
+    steps:
+      - run: echo $tag
+      - uses: actions/checkout@v3
+      - run: mkdir -p path/to/artifact
+      - run: mkdir -p path/to/artifact2
+      - run: echo "BBBBB" > path/to/artifact/artifact1-$tag.txt
+      - run: echo $tag > path/to/artifact2/artifact2-$tag.txt
+      - run: ls -al path/to/artifact
+      - run: ls -al path/to/artifact2
+      - name: test interpolation
+        run: ls ${{env.LS_FLAG}} .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact-${{env.tag}}
+          path: path/to/artifact/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact-2-${{env.tag}}
+          path: path/to/artifact2/
+
+  test-artifact:
+    name: Test artifacts
+    runs-on: ubuntu-latest
+    needs: [create-artifacts]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact-${{env.tag}}
+          path: path/to/artifact
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: path/to/artifact
+
+      - name: Show text artifact
+        run: cat artifact1-${{env.tag}}.txt
+        working-directory: path/to/artifact
