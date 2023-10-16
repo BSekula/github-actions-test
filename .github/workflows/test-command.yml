@@ -24,6 +24,6 @@ jobs:
       - run: mkdir -p bbbb
       - run: ls -alt
       - name: test interpolation
-        run: ls ${env.LS_FLAG} .
+        run: ls ${{env.LS_FLAG}} .
       - name: test interpolation
-        run: echo ${env.LS_FLAG}
+        run: echo ${{env.LS_FLAG}}
