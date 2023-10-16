@@ -23,7 +23,9 @@ jobs:
       - run: mkdir -p aaaa
       - run: mkdir -p bbbb
       - run: ls -alt
-      - name: test interpolation
-        run: ls ${{env.LS_FLAG}} .
-      - name: test interpolation
-        run: echo ${{env.LS_FLAG}}
+
+      - name: Set flag
+        run: echo "LS_FLAG=--color=auto" >> $GITHUB_ENV
+
+      - name: Test flag
+        run: ls ${{env.LS_FLAG}}
